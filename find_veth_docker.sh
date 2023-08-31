@@ -64,6 +64,9 @@ do
   # c_print "BWhite" "${i}"
   #getting the PIDs of the containers
   PID=$(docker inspect $i --format "{{.State.Pid}}")
+  if [[ $PID -eq 0 ]]; then
+    continue
+  fi
   #using the PID, we can get the interface index of the eth0 interfae inside the container
   INDEX=$(cat /proc/$PID/net/igmp |grep "$INTF"| awk '{print $1}')
   #using the index, we can identify the veth interface
