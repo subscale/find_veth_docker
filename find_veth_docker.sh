@@ -85,7 +85,7 @@ do
   mac_address=$(docker inspect $i| jq -r .[].NetworkSettings.Networks.\"$network\".MacAddress)
   gateway=$(docker inspect $i| jq -r .[].NetworkSettings.Networks.\"$network\".Gateway)
 
-  if [[ "$gateway" == "null" ]]; then
+  if [[ -z "$gateway" ]]; then
       continue
   fi
   bridge=$(ip -br addr |grep $gateway|awk '{print $1}')
