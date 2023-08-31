@@ -84,6 +84,10 @@ do
   ip_address=$(docker inspect $i|jq -r .[].NetworkSettings.Networks.\"$network\".IPAddress)
   mac_address=$(docker inspect $i| jq -r .[].NetworkSettings.Networks.\"$network\".MacAddress)
   gateway=$(docker inspect $i| jq -r .[].NetworkSettings.Networks.\"$network\".Gateway)
+
+  if [[ "$gateway" == "null" ]]; then
+      continue
+  fi
   bridge=$(ip -br addr |grep $gateway|awk '{print $1}')
   bridge_ip=$(ip a |grep $bridge |grep inet|awk '{print $2}')
 
