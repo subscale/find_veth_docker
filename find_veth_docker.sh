@@ -1,5 +1,5 @@
 #!/bin/bash
-ROOT="$(dirname "$0")"
+ROOT="$(dirname "$(readlink -f "$0")")"
 
 source $ROOT/sources/extra.sh
 
